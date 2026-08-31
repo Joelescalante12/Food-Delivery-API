@@ -1,5 +1,6 @@
 package com.fooddelivery.food_delivery_api.controller;
 
+import com.fooddelivery.food_delivery_api.domain.order.OrderResponse;
 import com.fooddelivery.food_delivery_api.domain.restaurant.CreateRestaurantRequest;
 import com.fooddelivery.food_delivery_api.domain.restaurant.RestaurantResponse;
 import com.fooddelivery.food_delivery_api.domain.restaurant.RestaurantService;
@@ -38,7 +39,12 @@ public class RestaurantController {
         return restaurantService.getRestaurant(id);
     }
 
+    @GetMapping("/restaurant/{restaurantId}/orders")
+    public ResponseEntity<Page<OrderResponse>> getAllRestaurantOrder(@PathVariable Long restaurantId, @PageableDefault(size = 10, sort = "restaurant_id") Pageable pagination)
+    {
+        Page<OrderResponse> restaurantOrder = restaurantService.getAllRestaurantOrder(restaurantId, pagination);
 
-
+        return ResponseEntity.ok(restaurantOrder);
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.fooddelivery.food_delivery_api.domain.restaurant;
 
 import com.fooddelivery.food_delivery_api.domain.order.OrderRepository;
+import com.fooddelivery.food_delivery_api.domain.order.OrderResponse;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ public class RestaurantService {
     @Autowired
     RestaurantRepository restaurantRepository;
 
+    @Autowired
     OrderRepository orderRepository;
 
     public RestaurantResponse createRestaurant(@Valid CreateRestaurantRequest data){
@@ -31,5 +33,11 @@ public class RestaurantService {
     public RestaurantResponse getRestaurant(Long id) {
         var restaurant = restaurantRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Restaurant not found with id: " + id));
         return new RestaurantResponse(restaurant);
+    }
+
+    public Page<OrderResponse> getAllRestaurantOrder(Long restaurantId, Pageable pagination) {
+
+        return orderRepository.findAllByRestaurant_Id(restaurantId,pagination);
+
     }
 }
