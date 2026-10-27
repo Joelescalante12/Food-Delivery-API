@@ -1,8 +1,8 @@
 package com.fooddelivery.food_delivery_api.domain.customer;
 
+import com.fooddelivery.food_delivery_api.domain.address.MapboxAddressValidatorService;
 import com.fooddelivery.food_delivery_api.domain.order.OrderRepository;
 import com.fooddelivery.food_delivery_api.domain.order.OrderResponse;
-import com.fooddelivery.food_delivery_api.domain.order.RecordedOrder;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,8 +18,14 @@ public class CustomerService {
     @Autowired
     OrderRepository orderRepository;
 
+    @Autowired
+    MapboxAddressValidatorService mapboxAddressValidatorService;
+
     public CustomerResponse createCustomer(CreateCustomerRequest data){
-        System.out.println("podrontotnmax");
+        if (data.address() != null) {
+            mapboxAddressValidatorService.validate(data.address());
+        }
+
         var customer = customerRepository.save(new Customer(data));
         return new CustomerResponse(customer);
     }

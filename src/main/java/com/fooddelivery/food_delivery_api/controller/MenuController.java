@@ -15,18 +15,19 @@ import org.springframework.web.servlet.function.EntityResponse;
 import java.util.List;
 
 @RestController
+@RequestMapping("/restaurant")
 public class MenuController {
 
     @Autowired
     MenuService menuService;
 
-    @GetMapping("{restaurantId}/menu")
+    @GetMapping("/{restaurantId}/menu")
     public ResponseEntity<Page<MenuResponse>> getMenu(@PathVariable Long restaurantId, @PageableDefault(size = 10, sort = "Name") Pageable pagination){
         Page<MenuResponse> menu = menuService.getMenu(restaurantId, pagination);
         return ResponseEntity.ok(menu);
     }
 
-    @PostMapping("/create/menu")
+    @PostMapping("/menu")
     public ResponseEntity<MenuResponse> createMenu(@RequestBody CreateMenuRequest data){
 
         var response = menuService.createMenu(data);

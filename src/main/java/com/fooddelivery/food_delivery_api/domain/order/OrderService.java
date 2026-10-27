@@ -5,6 +5,7 @@ import com.fooddelivery.food_delivery_api.domain.customer.Customer;
 import com.fooddelivery.food_delivery_api.domain.customer.CustomerRepository;
 import com.fooddelivery.food_delivery_api.domain.restaurant.Restaurant;
 import com.fooddelivery.food_delivery_api.domain.restaurant.RestaurantRepository;
+import com.fooddelivery.food_delivery_api.domain.restaurant.RestaurantStatus;
 import com.fooddelivery.food_delivery_api.menu.Menu;
 import com.fooddelivery.food_delivery_api.menu.MenuRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -108,7 +109,7 @@ public class OrderService {
     private void validateRestaurantIsOpen(
             Restaurant restaurant
     ) {
-        if (restaurant.getStatus() == OrderStatus.CLOSED) {
+        if (restaurant.getStatus() == RestaurantStatus.CLOSED) {
             throw new ValidationException(
                     "Restaurant is closed"
             );

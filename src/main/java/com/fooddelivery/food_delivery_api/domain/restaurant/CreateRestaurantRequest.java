@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public record CreateRestaurantRequest(
        @NotBlank String name,
        @NotBlank String address,
-       @NotNull OrderStatus status,
+       @NotNull RestaurantStatus status,
        @NotNull FulfillmentType fulfillmentType
         ) {
 }

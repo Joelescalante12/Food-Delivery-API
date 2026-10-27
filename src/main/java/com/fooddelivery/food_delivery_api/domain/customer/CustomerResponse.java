@@ -2,7 +2,7 @@ package com.fooddelivery.food_delivery_api.domain.customer;
 
 public record CustomerResponse(
         Long id,
-        String firstname,
+        String firstName,
         String lastName,
         String email,
         String phone,

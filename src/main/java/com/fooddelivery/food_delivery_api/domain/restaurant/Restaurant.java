@@ -24,8 +24,8 @@ public class Restaurant {
     private String address;
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus status;
-    //TODO Cambiar el Order Status por FulfillmentType
+    private RestaurantStatus status;
+
     @Enumerated(EnumType.STRING)
     private FulfillmentType fulfillmentType;
 

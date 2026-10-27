@@ -27,7 +27,7 @@ public class OrderController {
 
     @PatchMapping("{orderId}/accept")
     public ResponseEntity<?> acceptOrder(@PathVariable Long orderId){
-        System.out.println("oooooooo");
+
         orderService.acceptOrder(orderId);
 
         return ResponseEntity.ok().build();

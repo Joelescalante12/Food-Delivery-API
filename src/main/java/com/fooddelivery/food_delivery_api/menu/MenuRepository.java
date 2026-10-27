@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface MenuRepository extends JpaRepository<Menu, Long> {
 
-    Page<MenuResponse> findByRestaurantId(Long restaurantId, Pageable paginacion);
+    Page<Menu> findByRestaurantId(Long restaurantId, Pageable paginacion);
 }
