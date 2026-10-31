@@ -9,11 +9,12 @@ public record MapboxGeocodeResponse(List<MapboxFeature> features) {
 }
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-record MapboxFeature(MapboxProperties properties) {
+record MapboxFeature(String id, MapboxProperties properties) {
 }
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 record MapboxProperties(
+        String mapbox_id,
         String full_address,
         String name,
         String place_formatted,

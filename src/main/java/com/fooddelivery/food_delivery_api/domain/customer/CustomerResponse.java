@@ -6,7 +6,7 @@ public record CustomerResponse(
         String lastName,
         String email,
         String phone,
-        String addresses,
+        Long addressId,
         Boolean isActive
 ) {
     public CustomerResponse(Customer customer) {
@@ -16,7 +16,7 @@ public record CustomerResponse(
                 customer.getLastName(),
                 customer.getEmail(),
                 customer.getPhone(),
-                customer.getAddress(),
+                customer.getAddressId(),
                 customer.getIsActive()
         );
     }

@@ -6,7 +6,8 @@ public record RecordAddress(
         String City,
         String StateProvince,
         Integer PostalCode,
-        String Country
+        String Country,
+        String label
 
 ) {
     public String toSearchQuery() {

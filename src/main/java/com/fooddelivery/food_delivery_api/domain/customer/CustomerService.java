@@ -1,6 +1,7 @@
 package com.fooddelivery.food_delivery_api.domain.customer;
 
-import com.fooddelivery.food_delivery_api.domain.address.MapboxAddressValidatorService;
+import com.fooddelivery.food_delivery_api.domain.address.AddressEntityType;
+import com.fooddelivery.food_delivery_api.domain.address.AddressService;
 import com.fooddelivery.food_delivery_api.domain.order.OrderRepository;
 import com.fooddelivery.food_delivery_api.domain.order.OrderResponse;
 import jakarta.persistence.EntityNotFoundException;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CustomerService {
@@ -19,15 +21,23 @@ public class CustomerService {
     OrderRepository orderRepository;
 
     @Autowired
-    MapboxAddressValidatorService mapboxAddressValidatorService;
+    AddressService addressService;
 
+    @Transactional
     public CustomerResponse createCustomer(CreateCustomerRequest data){
-        if (data.address() != null) {
-            mapboxAddressValidatorService.validate(data.address());
-        }
+        String mapboxId = addressService.resolveMapboxId(data.address());
 
         var customer = customerRepository.save(new Customer(data));
-        return new CustomerResponse(customer);
+
+        var address = addressService.create(
+                AddressEntityType.CUSTOMER,
+                customer.getId(),
+                mapboxId,
+                data.address().label()
+        );
+        customer.setAddressId(address.getId());
+
+        return new CustomerResponse(customerRepository.save(customer));
     }
 
 

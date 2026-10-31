@@ -48,6 +48,7 @@ public class OrderService {
 
         Customer customer = findCustomer(data.customerId());
         validateCustomerIsActive(customer);
+        validateCustomerHasAddress(customer);
 
         Restaurant restaurant = findRestaurant(data.restaurantId());
         validateRestaurantIsOpen(restaurant);
@@ -94,6 +95,14 @@ public class OrderService {
         if (!customer.getIsActive()) {
             throw new ValidationException(
                     "Customer account is not active"
+            );
+        }
+    }
+
+    private void validateCustomerHasAddress(Customer customer) {
+        if (customer.getAddressId() == null) {
+            throw new ValidationException(
+                    "Customer has no delivery address"
             );
         }
     }
@@ -182,8 +191,8 @@ public class OrderService {
         Order order = new Order();
         order.setCustomer(customer);
         order.setRestaurant(restaurant);
-        order.setAddress(
-                customer.getAddress()
+        order.setAddressId(
+                customer.getAddressId()
         );
         order.setTotalPrice(totalPrice);
         order.setStatus(OrderStatus.PENDING);

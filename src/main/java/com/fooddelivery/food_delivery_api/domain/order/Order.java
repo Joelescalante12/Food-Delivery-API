@@ -35,11 +35,8 @@ public class Order {
 
     //private Driver DriverId;
 
-//    @OneToOne
-//    @JoinColumn(name = "deliveryaddress_id", nullable = false)
-//    private Address DeliveryAddress;
-
-    private String address;
+    // Delivery address: row in the addresses table.
+    private Long addressId;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;

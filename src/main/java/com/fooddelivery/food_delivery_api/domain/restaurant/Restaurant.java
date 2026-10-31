@@ -21,7 +21,8 @@ public class Restaurant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String address;
+    // Points to the row in the addresses table (the Mapbox id lives there).
+    private Long addressId;
 
     @Enumerated(EnumType.STRING)
     private RestaurantStatus status;
@@ -34,7 +35,7 @@ public class Restaurant {
 
     public Restaurant(CreateRestaurantRequest data) {
         this.name = data.name();
-        this.address = data.address();
+
         this.status = data.status();
         this.fulfillmentType = data.fulfillmentType();
         this.createdAt = LocalDateTime.now();

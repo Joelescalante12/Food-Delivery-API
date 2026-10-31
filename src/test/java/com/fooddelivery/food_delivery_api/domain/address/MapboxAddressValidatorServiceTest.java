@@ -13,7 +13,7 @@ class MapboxAddressValidatorServiceTest {
                 "test-token"
         );
 
-        assertThrows(InvalidAddressException.class, () -> service.validate(null));
+        assertThrows(InvalidAddressException.class, () -> service.resolveMapboxId(null));
     }
 
     @Test
@@ -28,9 +28,10 @@ class MapboxAddressValidatorServiceTest {
                 "Austin",
                 "TX",
                 78701,
-                "US"
+                "US",
+                "Home"
         );
 
-        assertThrows(InvalidAddressException.class, () -> service.validate(address));
+        assertThrows(InvalidAddressException.class, () -> service.resolveMapboxId(address));
     }
 }

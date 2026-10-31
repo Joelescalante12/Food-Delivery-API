@@ -29,7 +29,8 @@ public class Customer {
 
     private String phone;
     // User can have an address because this way we can show him restaurants nearby.
-    private String address;
+    // Points to the row in the addresses table (the Mapbox id lives there).
+    private Long addressId;
 
     private Boolean isActive;
 
@@ -41,7 +42,7 @@ public class Customer {
         this.lastName = data.lastName();
         this.email = data.email();
         this.phone = data.phone();
-        this.address = data.address() != null ? data.address().toSearchQuery() : null;
+
         this.isActive = true; // Default active state for new customers
     }
 }

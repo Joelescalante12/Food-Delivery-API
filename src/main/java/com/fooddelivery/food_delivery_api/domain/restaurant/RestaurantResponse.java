@@ -6,7 +6,7 @@ public record RestaurantResponse(
         Long id,
         String name,
         RestaurantStatus status,
-        String address,
+        Long addressId,
         FulfillmentType fulfillmentType
 ) {
 
@@ -15,7 +15,7 @@ public record RestaurantResponse(
                 restaurant.getId(),
                 restaurant.getName(),
                 restaurant.getStatus(),
-                restaurant.getAddress(),
+                restaurant.getAddressId(),
                 restaurant.getFulfillmentType()
         );
     }

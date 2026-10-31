@@ -24,7 +24,7 @@ public class MapboxAddressValidatorService {
                 .build();
     }
 
-    public void validate(RecordAddress address) {
+    public String resolveMapboxId(RecordAddress address) {
         if (address == null) {
             throw new InvalidAddressException("Address is required.");
         }
@@ -49,6 +49,8 @@ public class MapboxAddressValidatorService {
             if (response == null || response.features() == null || response.features().isEmpty()) {
                 throw new InvalidAddressException("The delivery address does not exist or could not be validated.");
             }
+
+            return extractMapboxId(response.features().get(0));
         } catch (HttpClientErrorException.Unauthorized exception) {
             throw new InvalidAddressException("Mapbox address validation failed because the configured token is invalid or expired.");
         } catch (HttpClientErrorException exception) {
@@ -56,6 +58,17 @@ public class MapboxAddressValidatorService {
         } catch (RestClientException exception) {
             throw new InvalidAddressException("Mapbox address validation service is currently unavailable.");
         }
+    }
+
+    private String extractMapboxId(MapboxFeature feature) {
+        String mapboxId = feature.properties() != null && feature.properties().mapbox_id() != null
+                ? feature.properties().mapbox_id()
+                : feature.id();
+
+        if (mapboxId == null || mapboxId.isBlank()) {
+            throw new InvalidAddressException("Mapbox did not return an id for the address.");
+        }
+        return mapboxId;
     }
 
     private String buildQuery(RecordAddress address) {
