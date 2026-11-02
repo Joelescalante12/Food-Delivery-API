@@ -52,8 +52,7 @@ public class RestaurantService {
     }
 
     public Page<OrderResponse> getAllRestaurantOrder(Long restaurantId, Pageable pagination) {
-
-        return orderRepository.findAllByRestaurant_Id(restaurantId,pagination);
+        return orderRepository.findAllByRestaurant_Id(restaurantId,pagination).map(OrderResponse::new);
 
     }
 }

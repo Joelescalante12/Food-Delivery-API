@@ -49,6 +49,6 @@ public class CustomerService {
     }
 
     public Page<OrderResponse> getAllCustomerOrders(Long customerId, Pageable pagination) {
-        return orderRepository.findAllByCustomer_Id(customerId, pagination);
+        return orderRepository.findAllByCustomer_Id(customerId, pagination).map(OrderResponse::new);
     }
 }
